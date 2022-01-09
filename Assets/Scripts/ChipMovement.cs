@@ -16,13 +16,15 @@ finalThrust;
     private ChipData data;
     Color transparentColour, playerOneColour, playerTwoColour;
     private Vector3 chipTarget;
-    private float directionOffsetAmount = 10;
     const float firingLowRange = 12.8f;
     const float firingHighRange = 14.5f;
+    const float secondsToSkipTurn = 1;
+    float skipTurnTimer;
 
     // Start is called before the first frame update
     void Start()
     {
+        skipTurnTimer = 0f;
         targetDirectionLevel = 50;
         waitTime = 0.01f;
         thrust = 2.3f;
@@ -137,7 +139,12 @@ finalThrust;
         }
         else if (golfShootPhase == 5)
         {
-            if (chipRb.velocity == Vector3.zero)
+            skipTurnTimer += Time.deltaTime;
+            if (skipTurnTimer > secondsToSkipTurn)
+            {
+                golfShootPhase++;
+            }
+            else if (chipRb.velocity == Vector3.zero)
             {
                 golfShootPhase++;
             }

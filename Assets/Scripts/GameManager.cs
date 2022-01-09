@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
         References.isPlayerOnesTurn = true;
         References.gameManager = this;
         chipPositionOffset = new Vector3(1, 0, 0);
-        References.boardSize = 16;
+        References.boardSize = 19;
         playerOneChipLocation = new Vector3(0, 0, -References.boardSize);
         playerTwoChipLocation = new Vector3(0, 0, References.boardSize);
         turnReference = 0;
