@@ -37,7 +37,7 @@ public class ChipMovement : MonoBehaviour
     {
         targetDirectionLevel = 50;
         waitTime = 0.01f;
-        thrust = 6;
+        thrust = 2.5f;
         playerOneColour = Color.blue;
         playerTwoColour = Color.red;
         transparentColour = new Color(1, 1, 1, 0.3f);
@@ -98,22 +98,7 @@ public class ChipMovement : MonoBehaviour
     {
         playerChip.SetActive(true);
         References.cameraMovement.SetCamera(2);
-        Vector3 directionOfShot = playerChip.transform.position - References.mainCamera.transform.position;
-        directionOfShot.y = 0;
-        Vector3 playerPosition3 = playerChip.transform.position;
-        playerPosition3.y = 0;
-        // Debug.Log("playerPosition3" + playerPosition3);
-        Vector3 cameraPosition3 = References.mainCamera.transform.position;
-        cameraPosition3.y = 0;
-        // Debug.Log("cameraPosition3" + cameraPosition3);
-        Vector3 targetDir = playerPosition3 - cameraPosition3;
-        float angle = Vector3.Angle(References.mainCamera.transform.forward, Vector3.zero);
-        Debug.Log(angle);
-        // Debug.Log(playerChip.transform.position);
-        Vector3 positionFromCameraToChip = References.mainCamera.transform.position - playerChip.transform.position;
-        positionFromCameraToChip.y = 0;
-        chipTarget = positionFromCameraToChip;
-        Debug.DrawRay(playerChip.transform.position, chipTarget);
+
         if (golfShootPhase == 0)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -143,6 +128,18 @@ public class ChipMovement : MonoBehaviour
                 directionLevel = targetDirectionLevel - 50;
                 Debug.Log(directionLevel);
                 References.cameraMovement.ApplyCameraRotationOffset(directionLevel / 10);
+                Vector3 playerPosition3 = playerChip.transform.position;
+                playerPosition3.y = 0;
+                // Debug.Log("playerPosition3" + playerPosition3);
+                Vector3 cameraPosition3 = References.mainCamera.transform.position;
+                cameraPosition3.y = 0;
+                // Debug.Log("cameraPosition3" + cameraPosition3);
+                Vector3 targetDir = playerPosition3 - cameraPosition3;
+                // Debug.Log(playerChip.transform.position);
+                Vector3 positionFromCameraToChip = References.mainCamera.transform.position - playerChip.transform.position;
+                positionFromCameraToChip.y = 0;
+                chipTarget = positionFromCameraToChip;
+                References.cameraMovement.ApplyCameraRotationOffset(-directionLevel / 10);
                 golfShootPhase++;
             }
         }
@@ -151,40 +148,9 @@ public class ChipMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 // modify thrust based on power level
-                float powerMultiplier = powerLevel / 100;
-                Debug.Log("powerMultiplier" + powerMultiplier);
+                float powerMultiplier = (powerLevel + 20) / 100; // gets a value between 0.2 and 1.2
                 float finalThrust = thrust * powerMultiplier;
-                Debug.Log("finalThrust" + finalThrust);
-
-                // add 50 here so that the range is 50 - 150, 100 being in the center
-                // float directionErrorFactor = (directionLevel + 50) / 100;
-                // Debug.Log("directionErrorFactor" + directionErrorFactor);
-                // Vector3 directionCalculated = (Vector3.right * directionErrorFactor);
-                // Debug.Log("directionCalculated" + directionCalculated);
-                // Vector3 finalDirection = chipTarget + directionCalculated;
-                // Debug.Log("finalDirection" + finalDirection);
-                // Vector3 positionFromCameraToChip = References.mainCamera.transform.position - playerChip.transform.position;
-                // positionFromCameraToChip.y = 0;
-                // chipTarget = positionFromCameraToChip;
-                // Debug.DrawRay(playerChip.transform.position, chipTarget);
                 chipRb.AddForce(chipTarget * -finalThrust, ForceMode.Impulse);
-
-                // modify direction based on direction level
-                // Vector3 localAngles = References.mainCamera.transform.localEulerAngles;
-                // Vector3 localAnglesClone = new Vector3(localAngles.x, localAngles.y, localAngles.z);
-                // localAnglesClone.y = ((localAnglesClone.y / 360) * directionErrorFactor) * 360;
-
-
-                Debug.Log("eulercamera" + References.mainCamera.transform.localEulerAngles);
-
-
-
-
-
-
-                // Debug.Log(finalDirection);
-                // Debug.Log(finalDirection);
-
             }
         }
         if (Input.GetButtonDown("Fire1"))
