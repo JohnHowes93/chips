@@ -11,7 +11,7 @@ public class ChipMovement : MonoBehaviour
 
 finalThrust;
     public bool isActivePiece, inputLocked, chipHasLeftTheBoard, directionIncrease;
-    private GameObject playerChip, placeholderChip;
+    private GameObject playerChip, placeholderChip, firingArea;
     private int turnPhase, golfShootPhase;
     private ChipData data;
     Color transparentColour, playerOneColour, playerTwoColour;
@@ -27,7 +27,7 @@ finalThrust;
         skipTurnTimer = 0f;
         targetDirectionLevel = 50;
         waitTime = 0.01f;
-        thrust = 2.3f;
+        thrust = 1.9f;
         playerOneColour = Color.blue;
         playerTwoColour = Color.red;
         transparentColour = new Color(1, 1, 1, 0.3f);
@@ -36,6 +36,7 @@ finalThrust;
         turnPhase = 0;
         placeholderChip = transform.Find("PlaceholderChip").gameObject;
         playerChip = transform.Find("PlayerChip").gameObject;
+        firingArea = GameObject.Find("FiringArea").gameObject;
         placeholderChip.SetActive(false);
         playerChip.SetActive(false);
         chipRb = playerChip.GetComponent<Rigidbody>();
@@ -85,7 +86,9 @@ finalThrust;
 
         if (golfShootPhase == 0)
         {
+            firingArea.SetActive(false);
             References.cameraMovement.SetCamera(2);
+            GameObject.Find("UI").transform.Find("PowerLevelSlider").gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 golfShootPhase++;
@@ -96,7 +99,6 @@ finalThrust;
             //set powerlevel
             References.cameraMovement.SetCamera(0);
             HandlePowerMeter();
-
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 powerLevel = targetPowerLevel;
@@ -106,6 +108,7 @@ finalThrust;
         }
         else if (golfShootPhase == 2)
         {
+            GameObject.Find("UI").transform.Find("DirectionLevelSlider").gameObject.SetActive(true);
             // set direction
             HandleDirectionMeter();
             if (Input.GetKeyDown(KeyCode.Space))
@@ -126,6 +129,9 @@ finalThrust;
         }
         else if (golfShootPhase == 3)
         {
+            GameObject.Find("PowerLevelSlider").SetActive(false);
+            GameObject.Find("DirectionLevelSlider").SetActive(false);
+
             golfShootPhase++;
             // modify thrust based on power level
             float powerMultiplier = (powerLevel + 20) / 100; // gets a value between 0.2 and 1.2
@@ -182,6 +188,7 @@ finalThrust;
 
     void HandleDirectionMeter()
     {
+        GameObject.Find("DirectionLevelSlider").SetActive(true);
         directionTimer += Time.deltaTime;
         if (directionTimer > waitTime)
         {
@@ -208,6 +215,7 @@ finalThrust;
     {
         if (placeholderChip.activeSelf)
         {
+            firingArea.SetActive(true);
             References.cameraMovement.SetCamera(1);
             Ray rayFromCameraToCursor = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane playerPlane = new Plane(Vector3.up, transform.position);
