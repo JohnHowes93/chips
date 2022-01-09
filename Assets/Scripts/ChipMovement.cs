@@ -31,13 +31,14 @@ public class ChipMovement : MonoBehaviour
     private bool directionIncrease;
     private float powerTimer, directionTimer, waitTime;
     private float directionOffsetAmount = 10;
+    private float finalThrust;
 
     // Start is called before the first frame update
     void Start()
     {
         targetDirectionLevel = 50;
         waitTime = 0.01f;
-        thrust = 2.5f;
+        thrust = 2.3f;
         playerOneColour = Color.blue;
         playerTwoColour = Color.red;
         transparentColour = new Color(1, 1, 1, 0.3f);
@@ -54,7 +55,6 @@ public class ChipMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (isActivePiece)
         {
             References.activeChip = playerChip;
@@ -97,10 +97,10 @@ public class ChipMovement : MonoBehaviour
     void GolfShoot()
     {
         playerChip.SetActive(true);
-        References.cameraMovement.SetCamera(2);
 
         if (golfShootPhase == 0)
         {
+            References.cameraMovement.SetCamera(2);
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 golfShootPhase++;
@@ -126,16 +126,12 @@ public class ChipMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 directionLevel = targetDirectionLevel - 50;
-                Debug.Log(directionLevel);
                 References.cameraMovement.ApplyCameraRotationOffset(directionLevel / 10);
                 Vector3 playerPosition3 = playerChip.transform.position;
                 playerPosition3.y = 0;
-                // Debug.Log("playerPosition3" + playerPosition3);
                 Vector3 cameraPosition3 = References.mainCamera.transform.position;
                 cameraPosition3.y = 0;
-                // Debug.Log("cameraPosition3" + cameraPosition3);
                 Vector3 targetDir = playerPosition3 - cameraPosition3;
-                // Debug.Log(playerChip.transform.position);
                 Vector3 positionFromCameraToChip = References.mainCamera.transform.position - playerChip.transform.position;
                 positionFromCameraToChip.y = 0;
                 chipTarget = positionFromCameraToChip;
@@ -145,25 +141,33 @@ public class ChipMovement : MonoBehaviour
         }
         else if (golfShootPhase == 3)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            golfShootPhase++;
+            // modify thrust based on power level
+            float powerMultiplier = (powerLevel + 20) / 100; // gets a value between 0.2 and 1.2
+            finalThrust = thrust * powerMultiplier;
+            References.cameraMovement.SetCamera(3);
+            StartCoroutine(FireChipAfterXSeconds(3));
+        }
+        else if (golfShootPhase == 4)
+        {
+
+        }
+        else if (golfShootPhase == 5)
+        {
+            if (chipRb.velocity == Vector3.zero)
             {
-                // modify thrust based on power level
-                float powerMultiplier = (powerLevel + 20) / 100; // gets a value between 0.2 and 1.2
-                float finalThrust = thrust * powerMultiplier;
-                chipRb.AddForce(chipTarget * -finalThrust, ForceMode.Impulse);
+                golfShootPhase++;
+            }
+            else if (chipHasLeftTheBoard)
+            {
+                golfShootPhase++;
             }
         }
-        if (Input.GetButtonDown("Fire1"))
+        else if (golfShootPhase == 6)
         {
-            // inputLocked = true;
-            // Ray rayFromCameraToCursor = Camera.main.ScreenPointToRay(Input.mousePosition);
-            // Plane playerPlane = new Plane(Vector3.up, transform.position);
-            // playerPlane.Raycast(rayFromCameraToCursor, out float distanceFromCamera);
-            // Vector3 cursorPosition = rayFromCameraToCursor.GetPoint(distanceFromCamera);
-            // Vector3 distanceToTravel = cursorPosition - transform.position;
-            // chipRb.AddForce(distanceToTravel * -thrust, ForceMode.Impulse);
-            // turnPhase++;
+            // end turn
         }
+
     }
 
     void HandlePowerMeter()
@@ -264,12 +268,21 @@ public class ChipMovement : MonoBehaviour
         }
     }
 
+    IEnumerator FireChipAfterXSeconds(int seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        chipRb.AddForce(chipTarget * -finalThrust, ForceMode.Impulse);
+        yield return new WaitForSeconds(3);
+        golfShootPhase++;
+    }
+
     IEnumerator LockInputForXSeconds(int seconds)
     {
         inputLocked = true;
         yield return new WaitForSeconds(seconds);
         inputLocked = false;
     }
+
 
     private void LockInput()
     {

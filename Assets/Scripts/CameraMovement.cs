@@ -33,13 +33,17 @@ public class CameraMovement : MonoBehaviour
         {
             Camera0();
         }
-        if (cameraMode == 1)
+        else if (cameraMode == 1)
         {
             Camera1();
         }
-        if (cameraMode == 2)
+        else if (cameraMode == 2)
         {
             Camera2();
+        }
+        else if (cameraMode == 3)
+        {
+            Camera3();
         }
 
     }
@@ -57,14 +61,8 @@ public class CameraMovement : MonoBehaviour
     public void Camera2()
     {
         // golf mode
-        // float left = horizontalSpeed * Input.GetKey("Left");
-        // v = verticalSpeed * Input.GetAxis("Mouse Y");
-        // transform.Rotate(v, h, 0);
-        // transform.position = References.activeChip.transform.position - golfCamOffset;
-        // Debug.Log("here");
         if (Input.GetKey("left"))
         {
-            // Debug.Log("left");
             transform.RotateAround(References.activeChip.transform.position, Vector3.up, cameraSpeed * Time.deltaTime);
         }
         else if (Input.GetKey("right"))
@@ -74,9 +72,19 @@ public class CameraMovement : MonoBehaviour
         transform.LookAt(References.activeChip.transform);
     }
 
+    public void Camera3()
+    {
+        Debug.Log("here");
+        transform.LookAt(Vector3.zero, Vector3.up);
+    }
+
     public void SetCamera(int mode)
     {
         cameraMode = mode;
+        if (mode == 3)
+        {
+            PositionCameraRandomlyAroundBoard();
+        }
     }
 
     public void PositionCameraAboveChip()
@@ -88,7 +96,15 @@ public class CameraMovement : MonoBehaviour
     public void ApplyCameraRotationOffset(float angle)
     {
         transform.RotateAround(References.activeChip.transform.position, Vector3.up, angle);
+    }
 
+    private void PositionCameraRandomlyAroundBoard()
+    {
+        // x - 15 15, y 20 30 z - 15 15
+        float x = Random.Range(-15, 15);
+        float y = Random.Range(20, 30);
+        float z = Random.Range(-15, 15);
+        transform.position = new Vector3(x, y, z);
     }
 
 }
