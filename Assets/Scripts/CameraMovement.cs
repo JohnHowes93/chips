@@ -15,6 +15,9 @@ public class CameraMovement : MonoBehaviour
     private float cameraSpeed, v, h;
     private Vector3 golfCamOffset = new Vector3(0f, 10f, -0f);
     public float cameraDistanceFromChip;
+    private float travelSpeed = 3;
+
+    private Vector3 destination;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +28,7 @@ public class CameraMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (cameraMode == 0)
         {
@@ -53,8 +56,10 @@ public class CameraMovement : MonoBehaviour
     public void Camera1()
     {
         // top down view
-        transform.rotation = Quaternion.Euler(topDownRotation);
-        transform.position = topDownPosition;
+        // transform.rotation = Quaternion.Euler(topDownRotation);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(topDownRotation), travelSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, topDownPosition, travelSpeed * Time.deltaTime);
+        // transform.position = topDownPosition;
     }
     public void Camera2()
     {
@@ -72,7 +77,11 @@ public class CameraMovement : MonoBehaviour
 
     public void Camera3()
     {
-        transform.LookAt(Vector3.zero, Vector3.up);
+
+        transform.position = Vector3.Lerp(transform.position, destination, travelSpeed * Time.deltaTime);
+        Vector3 direction = Vector3.zero - transform.position;
+        // Quaternion toRotation = Quaternion.LookRotation(transform.forward, direction);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), travelSpeed * Time.deltaTime);
     }
 
     public void SetCamera(int mode)
@@ -98,10 +107,10 @@ public class CameraMovement : MonoBehaviour
     private void PositionCameraRandomlyAroundBoard()
     {
         // x - 15 15, y 20 30 z - 15 15
-        float x = Random.Range(-15, 15);
-        float y = Random.Range(20, 30);
-        float z = Random.Range(-15, 15);
-        transform.position = new Vector3(x, y, z);
+        float x = Random.Range(-25, 25);
+        float y = Random.Range(25, 35);
+        float z = Random.Range(-25, 25);
+        destination = new Vector3(x, y, z);
     }
 
 }
