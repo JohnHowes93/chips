@@ -7,31 +7,18 @@ using UnityEngine.UI;
 public class ChipMovement : MonoBehaviour
 {
     private Rigidbody chipRb;
-    public float thrust;
-    public bool isActivePiece;
-    private GameObject placeholderChip;
-    private GameObject playerChip;
-    private int turnPhase;
-    private bool inputLocked;
-    private bool chipHasLeftTheBoard;
-    private ChipData data;
-    Color transparentColour;
+    public float thrust, targetPowerLevel, powerLevel, targetDirectionLevel, directionLevel, powerTimer, directionTimer, waitTime,
 
+finalThrust;
+    public bool isActivePiece, inputLocked, chipHasLeftTheBoard, directionIncrease;
+    private GameObject playerChip, placeholderChip;
+    private int turnPhase, golfShootPhase;
+    private ChipData data;
+    Color transparentColour, playerOneColour, playerTwoColour;
+    private Vector3 chipTarget;
+    private float directionOffsetAmount = 10;
     const float firingLowRange = 12.8f;
     const float firingHighRange = 14.5f;
-    Color playerOneColour;
-    Color playerTwoColour;
-    private int golfShootPhase;
-
-    private Vector3 chipTarget;
-    private float targetPowerLevel;
-    private float powerLevel;
-    private float targetDirectionLevel;
-    private float directionLevel;
-    private bool directionIncrease;
-    private float powerTimer, directionTimer, waitTime;
-    private float directionOffsetAmount = 10;
-    private float finalThrust;
 
     // Start is called before the first frame update
     void Start()
@@ -68,10 +55,6 @@ public class ChipMovement : MonoBehaviour
                 GolfShoot();
             }
             if (turnPhase == 2)
-            {
-                WaitForPieceToStopMoving();
-            }
-            if (turnPhase == 3)
             {
                 Advance();
             }
@@ -165,8 +148,9 @@ public class ChipMovement : MonoBehaviour
         }
         else if (golfShootPhase == 6)
         {
-            References.gameManager.AdvanceTurn();
             golfShootPhase++;
+            turnPhase++;
+
         }
 
     }
@@ -261,14 +245,6 @@ public class ChipMovement : MonoBehaviour
         }
     }
 
-    void WaitForPieceToStopMoving()
-    {
-        if (chipRb.velocity == Vector3.zero)
-        {
-            turnPhase++;
-        }
-    }
-
     IEnumerator FireChipAfterXSeconds(int seconds)
     {
         yield return new WaitForSeconds(seconds);
@@ -326,6 +302,4 @@ public class ChipMovement : MonoBehaviour
         References.gameManager.AdvanceTurn();
         // isActivePiece = false;
     }
-
-
 }

@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(turnReference);
     }
 
     void BuildPlayerChips()

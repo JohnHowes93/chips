@@ -74,7 +74,6 @@ public class CameraMovement : MonoBehaviour
 
     public void Camera3()
     {
-        Debug.Log("here");
         transform.LookAt(Vector3.zero, Vector3.up);
     }
 
