@@ -27,6 +27,11 @@ public class GameManager : MonoBehaviour
         References.cameraMovement.SetCamera(0);
     }
 
+    void Update()
+    {
+        Debug.Log(turnReference);
+    }
+
     void BuildPlayerChips()
     {
         playerOneChips = new List<GameObject>();

@@ -165,7 +165,8 @@ public class ChipMovement : MonoBehaviour
         }
         else if (golfShootPhase == 6)
         {
-            // end turn
+            References.gameManager.AdvanceTurn();
+            golfShootPhase++;
         }
 
     }
