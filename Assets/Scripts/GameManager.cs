@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
         turnReference = 0;
         BuildPlayerChips();
         NewTurn();
+        References.cameraMovement.SetCamera(0);
     }
 
     void BuildPlayerChips()
