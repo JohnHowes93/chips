@@ -5,12 +5,12 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     public int playerOneScore, playerTwoScore;
-    const float innerCircleRange = 3.5f;
-    const float outerCircleRange = 7f;
-    const int pottedScore = 20;
-    const int innerCircleScore = 15;
-    const int middleCircleScore = 10;
-    const int outerCircleScore = 5;
+    public float innerCircleRange = 3.5f;
+    public float outerCircleRange = 7f;
+    public int pottedScore = 20;
+    public int innerCircleScore = 15;
+    public int middleCircleScore = 10;
+    public int outerCircleScore = 5;
     // Start is called before the first frame update
     void Start()
     {

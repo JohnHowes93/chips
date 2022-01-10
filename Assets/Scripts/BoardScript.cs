@@ -9,6 +9,7 @@ public class BoardScript : MonoBehaviour
     void Start()
     {
         MakePins(pinObject, Vector3.zero, 8);
+        DrawBoard();
     }
 
     // Update is called once per frame
@@ -28,4 +29,15 @@ public class BoardScript : MonoBehaviour
             // obj.transform.parent = gameObject.transform;
         }
     }
+
+    void DrawBoard()
+    {
+        GameObject marker15 = new GameObject { name = "marker15" };
+        marker15.DrawCircle(References.scoreManager.innerCircleRange, 0.1f);
+        GameObject marker10 = new GameObject { name = "marker10" };
+        marker10.DrawCircle(References.scoreManager.outerCircleRange, 0.1f);
+        GameObject marker5 = new GameObject { name = "marker5" };
+        marker5.DrawCircle(13, 0.1f);
+    }
+
 }
