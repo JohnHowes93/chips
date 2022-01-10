@@ -10,7 +10,7 @@ public class ChipMovement : MonoBehaviour
     public float thrust, targetPowerLevel, powerLevel, targetDirectionLevel, directionLevel, powerTimer, directionTimer, waitTime,
 
 finalThrust;
-    public bool isActivePiece, inputLocked, chipHasLeftTheBoard, directionIncrease, hasTakenShot;
+    public bool isActivePiece, inputLocked, chipHasLeftTheBoard, directionIncrease, hasTakenShot, chipPotted;
     private GameObject playerChip, placeholderChip, firingArea;
     private int turnPhase, golfShootPhase;
     private ChipData data;

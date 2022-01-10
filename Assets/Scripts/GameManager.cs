@@ -6,15 +6,17 @@ public class GameManager : MonoBehaviour
 {
     public GameObject chipPrefab;
     public List<GameObject> playerOneChips, playerTwoChips;
-    public int turnReference, playerOneScore, playerTwoScore;
+    public int turnReference;
     public Vector3 playerOneChipLocation, playerTwoChipLocation, chipPositionOffset;
     public static bool isPlayerOnesTurn;
-
     const float outOfBoundsDistance = 12.5f;
 
+    public int chipsPerPlayer;
 
     void Start()
     {
+        chipsPerPlayer = 1;
+        References.outOfBoundsDistance = outOfBoundsDistance;
         References.isPlayerOnesTurn = true;
         References.gameManager = this;
         chipPositionOffset = new Vector3(1, 0, 0);
@@ -29,13 +31,14 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
     }
 
     void BuildPlayerChips()
     {
         playerOneChips = new List<GameObject>();
         playerTwoChips = new List<GameObject>();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < chipsPerPlayer; i++)
         {
             GameObject playerOneChip = Instantiate(chipPrefab);
             playerOneChip.name = "Player 1 Chip " + (i + 1);
@@ -47,6 +50,8 @@ public class GameManager : MonoBehaviour
             playerTwoChip.transform.position = new Vector3(i, 0, -References.boardSize);
             playerTwoChips.Add(playerTwoChip);
         }
+        References.playerOneChips = playerOneChips;
+        References.playerTwoChips = playerTwoChips;
     }
 
     public void NewTurn()
@@ -65,6 +70,8 @@ public class GameManager : MonoBehaviour
 
     public void AdvanceTurn()
     {
+
+
         if (References.isPlayerOnesTurn)
         {
             References.isPlayerOnesTurn = !References.isPlayerOnesTurn;
@@ -73,9 +80,18 @@ public class GameManager : MonoBehaviour
         else
         {
             turnReference++;
-            References.isPlayerOnesTurn = !References.isPlayerOnesTurn;
-            NewTurn();
+            if (turnReference == playerTwoChips.Count)
+            {
+                References.scoreManager.CalculateScoreForAllChips();
+            }
+            else
+            {
+
+                References.isPlayerOnesTurn = !References.isPlayerOnesTurn;
+                NewTurn();
+            }
         }
+
     }
 
     public void RemoveOutOfBoundsPieces()
@@ -90,7 +106,7 @@ public class GameManager : MonoBehaviour
     }
     private bool CheckIfPieceIsOutOfBounds(GameObject playerChip)
     {
-        float distanceFromCenter = Vector3.Distance(playerChip.transform.position, Vector3.zero);
+        float distanceFromCenter = Vector3.Distance(playerChip.transform.Find("PlayerChip").transform.position, Vector3.zero);
         if (distanceFromCenter > outOfBoundsDistance)
         {
             return true;
@@ -111,7 +127,7 @@ public class GameManager : MonoBehaviour
             Rigidbody chipRb = playerChip.transform.Find("PlayerChip").GetComponent<Rigidbody>();
             if (chipRb && isOutOfBounds)
             {
-                Vector3 directionFromCenter = Vector3.zero - playerChip.transform.position;
+                Vector3 directionFromCenter = Vector3.zero - chipRb.transform.position;
                 chipRb.AddForce(-directionFromCenter * 0.5f, ForceMode.Impulse);
             }
         }
