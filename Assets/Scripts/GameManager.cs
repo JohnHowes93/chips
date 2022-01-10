@@ -5,13 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject chipPrefab;
-    public List<GameObject> playerOneChips;
-    public List<GameObject> playerTwoChips;
-    public int turnReference;
-    public Vector3 playerOneChipLocation;
-    public Vector3 playerTwoChipLocation;
-    public Vector3 chipPositionOffset;
+    public List<GameObject> playerOneChips, playerTwoChips;
+    public int turnReference, playerOneScore, playerTwoScore;
+    public Vector3 playerOneChipLocation, playerTwoChipLocation, chipPositionOffset;
     public static bool isPlayerOnesTurn;
+
+    const float outOfBoundsDistance = 12.5f;
+
 
     void Start()
     {
@@ -77,4 +77,44 @@ public class GameManager : MonoBehaviour
             NewTurn();
         }
     }
+
+    public void RemoveOutOfBoundsPieces()
+    {
+        for (int i = 0; i < turnReference + 1; i++)
+        {
+            GameObject playerOneChip = playerOneChips[i];
+            GameObject playerTwoChip = playerTwoChips[i];
+            PushChipOffBoard(playerOneChip);
+            PushChipOffBoard(playerTwoChip);
+        }
+    }
+    private bool CheckIfPieceIsOutOfBounds(GameObject playerChip)
+    {
+        float distanceFromCenter = Vector3.Distance(playerChip.transform.position, Vector3.zero);
+        if (distanceFromCenter > outOfBoundsDistance)
+        {
+            return true;
+        }
+        else if (distanceFromCenter < -outOfBoundsDistance)
+        {
+            return true;
+        }
+        else return false;
+    }
+
+    private void PushChipOffBoard(GameObject playerChip)
+    {
+        ChipMovement chipData = playerChip.GetComponent<ChipMovement>();
+        if (chipData.hasTakenShot)
+        {
+            bool isOutOfBounds = CheckIfPieceIsOutOfBounds(playerChip);
+            Rigidbody chipRb = playerChip.transform.Find("PlayerChip").GetComponent<Rigidbody>();
+            if (chipRb && isOutOfBounds)
+            {
+                Vector3 directionFromCenter = Vector3.zero - playerChip.transform.position;
+                chipRb.AddForce(-directionFromCenter * 0.5f, ForceMode.Impulse);
+            }
+        }
+    }
+
 }

@@ -10,7 +10,7 @@ public class ChipMovement : MonoBehaviour
     public float thrust, targetPowerLevel, powerLevel, targetDirectionLevel, directionLevel, powerTimer, directionTimer, waitTime,
 
 finalThrust;
-    public bool isActivePiece, inputLocked, chipHasLeftTheBoard, directionIncrease;
+    public bool isActivePiece, inputLocked, chipHasLeftTheBoard, directionIncrease, hasTakenShot;
     private GameObject playerChip, placeholderChip, firingArea;
     private int turnPhase, golfShootPhase;
     private ChipData data;
@@ -21,9 +21,11 @@ finalThrust;
     const float secondsToSkipTurn = 1;
     float skipTurnTimer;
 
+
     // Start is called before the first frame update
     void Start()
     {
+        hasTakenShot = false;
         skipTurnTimer = 0f;
         targetDirectionLevel = 50;
         waitTime = 0.01f;
@@ -161,9 +163,14 @@ finalThrust;
         }
         else if (golfShootPhase == 6)
         {
+            // check if piece is out of bounds
+            References.gameManager.RemoveOutOfBoundsPieces();
+            golfShootPhase++;
+        }
+        else if (golfShootPhase == 7)
+        {
             golfShootPhase++;
             turnPhase++;
-
         }
 
     }
@@ -262,6 +269,7 @@ finalThrust;
 
     IEnumerator FireChipAfterXSeconds(int seconds)
     {
+        hasTakenShot = true;
         yield return new WaitForSeconds(seconds);
         chipRb.AddForce(chipTarget * -finalThrust, ForceMode.Impulse);
         yield return new WaitForSeconds(3);
@@ -317,4 +325,6 @@ finalThrust;
         References.gameManager.AdvanceTurn();
         // isActivePiece = false;
     }
+
+
 }
