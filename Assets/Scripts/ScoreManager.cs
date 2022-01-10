@@ -53,7 +53,7 @@ public class ScoreManager : MonoBehaviour
             }
             else
             {
-                float distanceFromCenter = Vector3.Distance(playerChip.transform.position, Vector3.zero);
+                float distanceFromCenter = Vector3.Distance(playerChip.transform.Find("PlayerChip").transform.position, Vector3.zero);
                 if (distanceFromCenter < innerCircleRange)
                 {
                     playerTwoScore += innerCircleScore;
@@ -68,5 +68,7 @@ public class ScoreManager : MonoBehaviour
                 }
             }
         }
+        Debug.Log("playerOneScore " + playerOneScore);
+        Debug.Log("playerTwoScore " + playerTwoScore);
     }
 }

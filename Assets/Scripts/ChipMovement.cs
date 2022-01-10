@@ -14,7 +14,7 @@ finalThrust;
     private GameObject playerChip, placeholderChip, firingArea;
     private int turnPhase, golfShootPhase;
     private ChipData data;
-    Color transparentColour, playerOneColour, playerTwoColour;
+    Color transparentColour;
     private Vector3 chipTarget;
     const float firingLowRange = 12.8f;
     const float firingHighRange = 14.5f;
@@ -30,8 +30,8 @@ finalThrust;
         targetDirectionLevel = 50;
         waitTime = 0.01f;
         thrust = 1.9f;
-        playerOneColour = Color.blue;
-        playerTwoColour = Color.red;
+        References.playerOneColour = Color.blue;
+        References.playerTwoColour = Color.red;
         transparentColour = new Color(1, 1, 1, 0.3f);
         chipHasLeftTheBoard = false;
         UnlockInput();
@@ -234,13 +234,13 @@ finalThrust;
             {
                 if (References.isPlayerOnesTurn)
                 {
-                    placeholderChip.GetComponentInChildren<Renderer>().material.color = playerOneColour;
-                    playerChip.GetComponentInChildren<Renderer>().material.color = playerOneColour;
+                    placeholderChip.GetComponentInChildren<Renderer>().material.color = References.playerOneColour;
+                    playerChip.GetComponentInChildren<Renderer>().material.color = References.playerOneColour;
                 }
                 else
                 {
-                    placeholderChip.GetComponentInChildren<Renderer>().material.color = playerTwoColour;
-                    playerChip.GetComponentInChildren<Renderer>().material.color = playerTwoColour;
+                    placeholderChip.GetComponentInChildren<Renderer>().material.color = References.playerTwoColour;
+                    playerChip.GetComponentInChildren<Renderer>().material.color = References.playerTwoColour;
                     // position the camera above the chip
                 }
 

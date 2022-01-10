@@ -6,6 +6,8 @@ public class PotTrigger : MonoBehaviour
 {
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log(collision);
+        GameObject chip = collision.gameObject;
+        ChipMovement chipData = chip.GetComponentInParent<ChipMovement>();
+        chipData.chipPotted = true;
     }
 }

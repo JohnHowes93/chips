@@ -13,4 +13,11 @@ public class References : MonoBehaviour
     public static ScoreManager scoreManager;
     public static List<GameObject> playerOneChips, playerTwoChips;
     public static float outOfBoundsDistance;
+    public static Color playerOneColour, playerTwoColour;
+
+    void Start()
+    {
+        playerOneColour = Color.blue;
+        playerTwoColour = Color.red;
+    }
 }
