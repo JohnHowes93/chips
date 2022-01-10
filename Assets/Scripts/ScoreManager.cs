@@ -68,7 +68,5 @@ public class ScoreManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log("playerOneScore " + playerOneScore);
-        Debug.Log("playerTwoScore " + playerTwoScore);
     }
 }

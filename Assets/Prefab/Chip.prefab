@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7853075943129852098}
   - component: {fileID: 7853075943129852099}
   - component: {fileID: 7853075943129852096}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerChip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,6 +171,8 @@ MonoBehaviour:
   inputLocked: 0
   chipHasLeftTheBoard: 0
   directionIncrease: 0
+  hasTakenShot: 0
+  chipPotted: 0
 --- !u!1 &7853075943548724584
 GameObject:
   m_ObjectHideFlags: 0
