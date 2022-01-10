@@ -18,4 +18,9 @@ public class MenuChip : MonoBehaviour
         Vector3 force = new Vector3(xForce, yForce, zForce);
         GetComponent<Rigidbody>().velocity = force;
     }
+
+    void Update()
+    {
+
+    }
 }

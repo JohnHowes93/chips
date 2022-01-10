@@ -12,12 +12,6 @@ public class BoardScript : MonoBehaviour
         DrawBoard();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void MakePins(GameObject obj, Vector3 location, int howMany)
     {
         for (int i = 0; i < howMany; i++)

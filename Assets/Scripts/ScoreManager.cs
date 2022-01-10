@@ -12,11 +12,15 @@ public class ScoreManager : MonoBehaviour
     public int middleCircleScore = 10;
     public int outerCircleScore = 5;
     // Start is called before the first frame update
+
+    void Awake()
+    {
+        References.scoreManager = this;
+    }
     void Start()
     {
         playerOneScore = 0;
         playerTwoScore = 0;
-        References.scoreManager = this;
     }
     public void CalculateScoreForAllChips()
     {

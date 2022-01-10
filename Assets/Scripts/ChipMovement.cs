@@ -13,7 +13,6 @@ finalThrust;
     public bool isActivePiece, inputLocked, chipHasLeftTheBoard, directionIncrease, hasTakenShot, chipPotted;
     private GameObject playerChip, placeholderChip, firingArea;
     private int turnPhase, golfShootPhase;
-    private ChipData data;
     Color transparentColour;
     private Vector3 chipTarget;
     const float firingLowRange = 12.8f;
@@ -251,10 +250,6 @@ finalThrust;
                     turnPhase++;
                     golfShootPhase = 0;
                 }
-                // if (Input.GetButtonUp("Fire1"))
-                // {
-
-                // }
             }
             else
             {
@@ -276,19 +271,6 @@ finalThrust;
         golfShootPhase++;
     }
 
-    IEnumerator LockInputForXSeconds(int seconds)
-    {
-        inputLocked = true;
-        yield return new WaitForSeconds(seconds);
-        inputLocked = false;
-    }
-
-
-    private void LockInput()
-    {
-        inputLocked = true;
-    }
-
     private void UnlockInput()
     {
         inputLocked = false;
@@ -307,11 +289,6 @@ finalThrust;
             playerChip.transform.position = transform.position;
             playerChip.transform.rotation = transform.rotation;
         }
-    }
-
-    public void SetId(int id)
-    {
-        data.id = id;
     }
 
     public void SetActivePiece(bool isActive)

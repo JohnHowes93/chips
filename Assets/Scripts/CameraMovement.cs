@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-
-    private Vector3 playRotation = new Vector3(29.1f, 0f, 0f);
-    private Vector3 playPosition = new Vector3(0f, 4.23f, -8.5f);
-
     private Vector3 topDownPosition = new Vector3(0f, 30f, 0f);
     private Vector3 topDownRotation = new Vector3(90f, 0f, 0f);
     public static int cameraMode;
 
     private float cameraSpeed, v, h;
     private Vector3 golfCamOffset = new Vector3(0f, 10f, -0f);
-    public float cameraDistanceFromChip;
     private float travelSpeed = 3;
 
     private Vector3 destination;
