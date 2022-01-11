@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        chipsPerPlayer = 3;
+        chipsPerPlayer = 1;
         References.outOfBoundsDistance = outOfBoundsDistance;
         References.isPlayerOnesTurn = true;
         References.gameManager = this;

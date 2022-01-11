@@ -31,84 +31,80 @@ public class ScoreManager : MonoBehaviour
         List<GameObject> mergedLists = new List<GameObject>();
         mergedLists.AddRange(References.playerOneChips);
         mergedLists.AddRange(References.playerTwoChips);
-
+        List<GameObject> sortedList = mergedLists.OrderBy(x => -Vector3.Distance(x.transform.Find("PlayerChip").transform.position, Vector3.zero)).ToList();
         //use a single compare function
-        List<GameObject> sortedP1 = References.playerOneChips.OrderBy(x => -Vector3.Distance(x.transform.Find("PlayerChip").transform.position, Vector3.zero)).ToList();
-        List<GameObject> sortedP2 = References.playerTwoChips.OrderBy(x => -Vector3.Distance(x.transform.Find("PlayerChip").transform.position, Vector3.zero)).ToList();
-        foreach (GameObject playerChip in sortedP1)
+        foreach (GameObject playerChip in sortedList)
         {
+            string playerNumber = playerChip.name.Substring(7, 1);
             ChipMovement chipData = playerChip.GetComponentInChildren<ChipMovement>();
             Vector3 playerChipPosition = playerChip.transform.Find("PlayerChip").transform.position;
+            float distanceFromCenter = Vector3.Distance(playerChipPosition, Vector3.zero);
+            if (distanceFromCenter > References.boardSize)
+            {
+                yield break;
+            }
             if (chipData.chipPotted == true)
             {
-                playerOneScore += pottedScore;
+                switch (playerNumber)
+                {
+                    case "1":
+                        playerOneScore += pottedScore;
+                        break;
+                    case "2":
+                        playerTwoScore += pottedScore;
+                        break;
+                }
+                yield break;
             }
             else
             {
                 References.cameraMovement.SetDestination(playerChipPosition + (Vector3.up * 10));
                 yield return new WaitForSeconds(2);
-                float distanceFromCenter = Vector3.Distance(playerChipPosition, Vector3.zero);
                 if (distanceFromCenter < innerCircleRange)
                 {
-                    playerOneScore += innerCircleScore;
+                    switch (playerNumber)
+                    {
+                        case "1":
+                            playerOneScore += innerCircleScore;
+                            break;
+                        case "2":
+                            playerTwoScore += innerCircleScore;
+                            break;
+                    }
                     References.audioManager.Play("board-15");
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(2);
                 }
                 else if (distanceFromCenter < outerCircleRange)
                 {
-                    playerOneScore += middleCircleScore;
+                    switch (playerNumber)
+                    {
+                        case "1":
+                            playerOneScore += middleCircleScore;
+                            break;
+                        case "2":
+                            playerTwoScore += middleCircleScore;
+                            break;
+                    }
                     References.audioManager.Play("board-10");
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(2);
                 }
                 else if (distanceFromCenter < (References.boardSize - 0.1f))
                 {
-                    playerOneScore += outerCircleScore;
+                    switch (playerNumber)
+                    {
+                        case "1":
+                            playerOneScore += outerCircleScore;
+                            break;
+                        case "2":
+                            playerTwoScore += outerCircleScore;
+                            break;
+                    }
                     References.audioManager.Play("board-5");
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(2);
                 }
+                // trigger ui update here
             }
         }
-        foreach (GameObject playerChip in sortedP2)
-        {
-            ChipMovement chipData = playerChip.GetComponentInChildren<ChipMovement>();
-            Vector3 playerChipPosition = playerChip.transform.Find("PlayerChip").transform.position;
-            if (chipData.chipPotted)
-            {
-                playerTwoScore += pottedScore;
-            }
-            else
-            {
-                yield return new WaitForSeconds(2);
-                References.cameraMovement.SetDestination(playerChipPosition + (Vector3.up * 10));
-                float distanceFromCenter = Vector3.Distance(playerChipPosition, Vector3.zero);
-                if (distanceFromCenter < innerCircleRange)
-                {
-                    playerTwoScore += innerCircleScore;
-                    References.audioManager.Play("board-15");
-                    yield return new WaitForSeconds(1);
-                }
-                else if (distanceFromCenter < outerCircleRange)
-                {
-                    playerTwoScore += middleCircleScore;
-                    References.audioManager.Play("board-10");
-                    yield return new WaitForSeconds(1);
-                }
-                else if (distanceFromCenter < (References.boardSize - 0.1f))
-                {
-                    playerTwoScore += outerCircleScore;
-                    References.audioManager.Play("board-5");
-                    yield return new WaitForSeconds(1);
-                }
-            }
-        }
-    }
-
-    private int CompareChipDistanceFromCenter(GameObject chip1, GameObject chip2)
-    {
-        Debug.Log("testing");
-        Debug.Log(chip1);
-        Debug.Log(chip2);
-        return 1;
     }
 
     public void CalculateCurrentBoardState()
