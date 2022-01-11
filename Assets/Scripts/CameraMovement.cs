@@ -10,7 +10,7 @@ public class CameraMovement : MonoBehaviour
 
     private float cameraSpeed, v, h;
     private Vector3 golfCamOffset = new Vector3(0f, 10f, -0f);
-    private float travelSpeed = 3;
+    private float travelSpeed = 2;
 
     private Vector3 destination;
 
@@ -29,22 +29,45 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (cameraMode == 0)
+        switch (cameraMode)
         {
-            Camera0();
+            case 0:
+                Camera0();
+                break;
+            case 1:
+                Camera1();
+                break;
+            case 2:
+                Camera2();
+                break;
+            case 3:
+                Camera3();
+                break;
+            case 4:
+                Camera4();
+                break;
         }
-        else if (cameraMode == 1)
-        {
-            Camera1();
-        }
-        else if (cameraMode == 2)
-        {
-            Camera2();
-        }
-        else if (cameraMode == 3)
-        {
-            Camera3();
-        }
+        // Debug.Log(cameraMode);
+        // if (cameraMode == 0)
+        // {
+        //     Camera0();
+        // }
+        // else if (cameraMode == 1)
+        // {
+        //     Camera1();
+        // }
+        // else if (cameraMode == 2)
+        // {
+        //     Camera2();
+        // }
+        // else if (cameraMode == 3)
+        // {
+        //     Camera3();
+        // }
+        // else if (cameraMode == 4)
+        // {
+        //     Camera4();
+        // }
 
     }
 
@@ -52,17 +75,16 @@ public class CameraMovement : MonoBehaviour
     {
 
     }
-    public void Camera1()
+    public void Camera1()     // top down view
     {
-        // top down view
         // transform.rotation = Quaternion.Euler(topDownRotation);
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(topDownRotation), travelSpeed * Time.deltaTime);
         transform.position = Vector3.Lerp(transform.position, topDownPosition, travelSpeed * Time.deltaTime);
         // transform.position = topDownPosition;
     }
-    public void Camera2()
+
+    public void Camera2()    // golf cam
     {
-        // golf mode
         if (Input.GetKey("left"))
         {
             transform.RotateAround(References.activeChip.transform.position, Vector3.up, cameraSpeed * Time.deltaTime);
@@ -74,12 +96,19 @@ public class CameraMovement : MonoBehaviour
         transform.LookAt(References.activeChip.transform);
     }
 
-    public void Camera3()
+    public void Camera3() // move towards destination while looking at it
     {
 
         transform.position = Vector3.Lerp(transform.position, destination, travelSpeed * Time.deltaTime);
         Vector3 direction = Vector3.zero - transform.position;
         // Quaternion toRotation = Quaternion.LookRotation(transform.forward, direction);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), (travelSpeed * 1.8f) * Time.deltaTime);
+    }
+
+    public void Camera4() // focus chip when scoring
+    {
+        transform.position = Vector3.Lerp(transform.position, destination, travelSpeed * Time.deltaTime);
+        Vector3 direction = transform.position - (destination - Vector3.down * 10);
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), travelSpeed * Time.deltaTime);
     }
 
@@ -112,4 +141,8 @@ public class CameraMovement : MonoBehaviour
         destination = new Vector3(x, y, z);
     }
 
+    public void SetDestination(Vector3 newPosition)
+    {
+        destination = newPosition;
+    }
 }

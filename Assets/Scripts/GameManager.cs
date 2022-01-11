@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        chipsPerPlayer = 10;
+        chipsPerPlayer = 3;
         References.outOfBoundsDistance = outOfBoundsDistance;
         References.isPlayerOnesTurn = true;
         References.gameManager = this;
@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
 
     }
 
@@ -70,8 +71,6 @@ public class GameManager : MonoBehaviour
 
     public void AdvanceTurn()
     {
-
-
         if (References.isPlayerOnesTurn)
         {
             References.isPlayerOnesTurn = !References.isPlayerOnesTurn;
@@ -82,7 +81,7 @@ public class GameManager : MonoBehaviour
             turnReference++;
             if (turnReference == playerTwoChips.Count)
             {
-                References.scoreManager.CalculateScoreForAllChips();
+                StartCoroutine("HandleScore");
             }
             else
             {
@@ -91,7 +90,11 @@ public class GameManager : MonoBehaviour
                 NewTurn();
             }
         }
+    }
 
+    private IEnumerator HandleScore()
+    {
+        return References.scoreManager.CalculateScoreForAllChips();
     }
 
     public void RemoveOutOfBoundsPieces()

@@ -671,6 +671,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Board
       objectReference: {fileID: 0}
+    - target: {fileID: 869480809673342872, guid: c25a131c517b44049ab3fafbf27c3b7b, type: 3}
+      propertyPath: m_TagString
+      value: BoardBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 972789287063256268, guid: c25a131c517b44049ab3fafbf27c3b7b, type: 3}
+      propertyPath: m_TagString
+      value: BoardBase
+      objectReference: {fileID: 0}
     - target: {fileID: 2103867170109834304, guid: c25a131c517b44049ab3fafbf27c3b7b, type: 3}
       propertyPath: m_LocalPosition.y
       value: -20
