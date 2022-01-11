@@ -21,7 +21,6 @@ public class ChipCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log(other.relativeVelocity);
         if (other.gameObject.tag == "BoardBase")
         {
             float scaledVolumeLevel = scale(boardMinMagnitude, boardMaxMagnitude, minVolume, maxVolume, other.relativeVelocity.y);
