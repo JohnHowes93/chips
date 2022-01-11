@@ -14,4 +14,7 @@ public class Sound
     public bool loop;
     [HideInInspector]
     public AudioSource source;
+
+    [Range(0f, 1f)]
+    public float spatialBlend;
 }

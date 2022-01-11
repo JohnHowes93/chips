@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChipCollision : MonoBehaviour
 {
-    private float pinMinMagnitude, pinMaxMagnitude, minVolume, maxVolume, chipMinMagnitude, chipMaxMagnitude;
+    private float pinMinMagnitude, pinMaxMagnitude, minVolume, maxVolume, chipMinMagnitude, chipMaxMagnitude, boardMinMagnitude, boardMaxMagnitude, boardBounceThreshold;
 
     void Start()
     {
@@ -12,12 +12,24 @@ public class ChipCollision : MonoBehaviour
         pinMaxMagnitude = 30f;
         chipMinMagnitude = 0f;
         chipMaxMagnitude = 30f;
+        boardMinMagnitude = 0f;
+        boardMaxMagnitude = 6f;
+        boardBounceThreshold = 0.5f;
         minVolume = 0f;
         maxVolume = 1f;
     }
 
     private void OnCollisionEnter(Collision other)
     {
+        Debug.Log(other.relativeVelocity);
+        if (other.gameObject.tag == "BoardBase")
+        {
+            float scaledVolumeLevel = scale(boardMinMagnitude, boardMaxMagnitude, minVolume, maxVolume, other.relativeVelocity.y);
+            if (scaledVolumeLevel > boardBounceThreshold)
+            {
+                References.audioManager.Play("chip-bounce");
+            }
+        }
         if (other.gameObject.tag == "Pin")
         {
             float scaledVolumeLevel = scale(pinMinMagnitude, pinMaxMagnitude, minVolume, maxVolume, other.relativeVelocity.magnitude);
@@ -29,7 +41,6 @@ public class ChipCollision : MonoBehaviour
         else if (other.gameObject.tag == "Chip")
         {
             float scaledVolumeLevel = scale(chipMinMagnitude, chipMaxMagnitude, minVolume, maxVolume, other.relativeVelocity.magnitude);
-            Debug.Log(scaledVolumeLevel);
             if (scaledVolumeLevel > 0)
             {
                 References.audioManager.HandleChipCollision(scaledVolumeLevel);

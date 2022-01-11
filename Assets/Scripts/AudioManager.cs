@@ -31,6 +31,7 @@ public class AudioManager : MonoBehaviour
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
+            s.source.spatialBlend = s.spatialBlend;
         }
     }
     public void Play(string name)
@@ -83,6 +84,18 @@ public class AudioManager : MonoBehaviour
         {
             SetLevelAndPlay("pin-collision-1", level);
             lastPinCollisionSampleNumber = 1;
+        }
+    }
+
+    public void PlayTurnIndicator()
+    {
+        if (References.isPlayerOnesTurn)
+        {
+            Play("player-1");
+        }
+        else
+        {
+            Play("player-2");
         }
     }
 }

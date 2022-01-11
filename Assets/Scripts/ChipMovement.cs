@@ -17,7 +17,7 @@ finalThrust;
     private Vector3 chipTarget;
     const float firingLowRange = 12.8f;
     const float firingHighRange = 14.5f;
-    const float secondsToSkipTurn = 1;
+    const float secondsToSkipTurn = 3;
     float skipTurnTimer;
 
 
@@ -52,13 +52,20 @@ finalThrust;
             HandlePieceLeavingBoard();
             if (turnPhase == 0)
             {
-                PositionChipOnBoard();
+                References.audioManager.PlayTurnIndicator();
+                turnPhase++;
             }
             if (turnPhase == 1)
             {
-                GolfShoot();
+                PositionChipOnBoard();
+                return;
             }
             if (turnPhase == 2)
+            {
+                GolfShoot();
+                return;
+            }
+            if (turnPhase == 3)
             {
                 Advance();
             }
@@ -108,7 +115,6 @@ finalThrust;
                 powerLevel = targetPowerLevel;
                 golfShootPhase++;
             }
-
         }
         else if (golfShootPhase == 2)
         {
@@ -172,6 +178,11 @@ finalThrust;
             golfShootPhase++;
         }
         else if (golfShootPhase == 7)
+        {
+            References.scoreManager.CalculateCurrentBoardState();
+            golfShootPhase++;
+        }
+        else if (golfShootPhase == 8)
         {
             golfShootPhase++;
             turnPhase++;
@@ -286,8 +297,9 @@ finalThrust;
 
     private void HandlePieceLeavingBoard()
     {
-        if (playerChip.transform.position.y < -40)
+        if (playerChip.transform.position.y < -40 && chipHasLeftTheBoard == false)
         {
+            References.audioManager.Play("chip-outofbounds");
             chipHasLeftTheBoard = true;
         }
         if (chipHasLeftTheBoard)
@@ -296,6 +308,7 @@ finalThrust;
             transform.position = new Vector3(0, 0, References.isPlayerOnesTurn ? References.boardSize : -References.boardSize);
             playerChip.transform.position = transform.position;
             playerChip.transform.rotation = transform.rotation;
+            playerChip.SetActive(false);
         }
     }
 
