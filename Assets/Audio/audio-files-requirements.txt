@@ -1,0 +1,36 @@
+menu
+- button hover - done
+- button click - done
+- ambience 
+- launch - done
+
+game/chip
+- chip placed - done
+- chip fired - done
+- chip collision - done
+- chip bounce - done
+- chip out of bounds - done
+- movement
+
+pin
+-collision - done
+
+game/board
+- potted indicator
+- 15point indicator - done
+- 10 point indicator - done
+- 5 point indicator - done
+
+game/golf
+- power bar movement
+- power bar trigger - done
+- direction bar movement
+- direction bar trigger - done
+
+camera
+- camera movement   
+
+game
+- boot - done
+- player1turn
+- player2turn
