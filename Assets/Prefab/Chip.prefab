@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 7853075943129852098}
   - component: {fileID: 7853075943129852099}
   - component: {fileID: 7853075943129852096}
+  - component: {fileID: 7104331168806430536}
   m_Layer: 7
   m_Name: PlayerChip
-  m_TagString: Untagged
+  m_TagString: Chip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,6 +114,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &7104331168806430536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7853075943129852094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f84e63b5f509c5742b9f0af80b0b0fe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7853075943487355721
 GameObject:
   m_ObjectHideFlags: 0

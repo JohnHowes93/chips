@@ -14,11 +14,15 @@ public class CameraMovement : MonoBehaviour
 
     private Vector3 destination;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         References.cameraMovement = this;
         References.mainCamera = this.gameObject;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         cameraSpeed = 30f;
     }
 

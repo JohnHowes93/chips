@@ -14,6 +14,7 @@ public class References : MonoBehaviour
     public static List<GameObject> playerOneChips, playerTwoChips;
     public static float outOfBoundsDistance;
     public static Color playerOneColour, playerTwoColour;
+    public static AudioManager audioManager;
     void Start()
     {
         playerOneColour = Color.blue;

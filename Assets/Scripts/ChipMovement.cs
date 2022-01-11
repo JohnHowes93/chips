@@ -65,6 +65,8 @@ finalThrust;
         }
     }
 
+
+
     void Shoot()
     {
         playerChip.SetActive(true);
@@ -102,6 +104,7 @@ finalThrust;
             HandlePowerMeter();
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                References.audioManager.Play("golf-powertrig");
                 powerLevel = targetPowerLevel;
                 golfShootPhase++;
             }
@@ -124,6 +127,8 @@ finalThrust;
                 Vector3 positionFromCameraToChip = References.mainCamera.transform.position - playerChip.transform.position;
                 positionFromCameraToChip.y = 0;
                 chipTarget = positionFromCameraToChip;
+                References.audioManager.Play("golf-directiontrig");
+
                 References.cameraMovement.ApplyCameraRotationOffset(-directionLevel / 10);
                 golfShootPhase++;
             }
@@ -245,10 +250,12 @@ finalThrust;
 
                 if (Input.GetButtonDown("Fire1"))
                 {
+                    References.audioManager.Play("chip-placed");
                     References.cameraMovement.PositionCameraAboveChip();
                     placeholderChip.SetActive(false);
                     turnPhase++;
                     golfShootPhase = 0;
+                    References.audioManager.chipCollisionsThisTurn = 0;
                 }
             }
             else
@@ -266,6 +273,7 @@ finalThrust;
     {
         hasTakenShot = true;
         yield return new WaitForSeconds(seconds);
+        References.audioManager.Play("chip-fired");
         chipRb.AddForce(chipTarget * -finalThrust, ForceMode.Impulse);
         yield return new WaitForSeconds(3);
         golfShootPhase++;
