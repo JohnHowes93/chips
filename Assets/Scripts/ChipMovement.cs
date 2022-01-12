@@ -196,11 +196,11 @@ public class ChipMovement : MonoBehaviour
         if (powerTimer > waitTime)
         {
             powerTimer = 0;
-            if (targetPowerLevel < 100)
+            if (targetPowerLevel < 101)
             {
                 targetPowerLevel++;
             }
-            else if (targetPowerLevel == 100)
+            else
             {
                 targetPowerLevel = 0;
             }

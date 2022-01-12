@@ -10,5 +10,6 @@ public class PotTrigger : MonoBehaviour
         ChipMovement chipData = chip.GetComponentInParent<ChipMovement>();
         chipData.chipPotted = true;
         References.audioManager.Play("board-20");
+        References.scoreManager.Handle20Potted();
     }
 }

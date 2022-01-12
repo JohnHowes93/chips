@@ -149,7 +149,7 @@ public class ScoreManager : MonoBehaviour
             ChipMovement chipData = playerChip.GetComponentInChildren<ChipMovement>();
             if (chipData.chipPotted == true)
             {
-                playerOneScoreCurrentBoardState += pottedScore;
+                // playerOneScoreCurrentBoardState += pottedScore;
             }
             else
             {
@@ -173,7 +173,7 @@ public class ScoreManager : MonoBehaviour
             ChipMovement chipData = playerChip.GetComponentInChildren<ChipMovement>();
             if (chipData.chipPotted)
             {
-                playerTwoScoreCurrentBoardState += pottedScore;
+                // playerTwoScoreCurrentBoardState += pottedScore;
             }
             else
             {
@@ -200,5 +200,19 @@ public class ScoreManager : MonoBehaviour
         {
             References.isAPieceOnTheBoard = true;
         }
+    }
+
+    public void Handle20Potted()
+    {
+        if (References.isPlayerOnesTurn == true)
+        {
+            playerOneScore = +pottedScore;
+        }
+        else
+        {
+            playerTwoScore = +pottedScore;
+        }
+        p1ScoreIndicator.SetText(playerOneScore.ToString());
+        p2ScoreIndicator.SetText(playerTwoScore.ToString());
     }
 }
