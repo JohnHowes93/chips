@@ -5,6 +5,7 @@ using UnityEngine;
 public class References : MonoBehaviour
 {
     public static GameManager gameManager;
+    public static TimeManager timeManager;
     public static float boardSize;
     public static bool isPlayerOnesTurn, isAPieceOnTheBoard;
     public static CameraMovement cameraMovement;

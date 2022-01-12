@@ -30,7 +30,7 @@ public class ChipMovement : MonoBehaviour
         hasTakenShot = false;
         skipTurnTimer = 0f;
         targetDirectionLevel = 50;
-        waitTime = 0.01f;
+        waitTime = 0.005f;
         thrust = 1.9f;
         References.playerOneColour = Color.blue;
         References.playerTwoColour = Color.red;
@@ -192,7 +192,7 @@ public class ChipMovement : MonoBehaviour
 
     void HandlePowerMeter()
     {
-        powerTimer += Time.deltaTime;
+        powerTimer += Time.deltaTime * 1.2f;
         if (powerTimer > waitTime)
         {
             powerTimer = 0;
@@ -211,7 +211,7 @@ public class ChipMovement : MonoBehaviour
     void HandleDirectionMeter()
     {
         GameObject.Find("DirectionLevelSlider").SetActive(true);
-        directionTimer += Time.deltaTime;
+        directionTimer += Time.deltaTime * 1.2f;
         if (directionTimer > waitTime)
         {
             directionTimer = 0;

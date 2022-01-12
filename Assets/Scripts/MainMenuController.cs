@@ -7,6 +7,7 @@ public class MainMenuController : MonoBehaviour
 {
     public void PlayGame()
     {
+        References.timeManager.DoNormalMotion();
         References.audioManager.Play("menu-click");
         SceneManager.LoadScene("2PlayerGame");
     }

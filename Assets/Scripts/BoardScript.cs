@@ -7,7 +7,7 @@ public class BoardScript : MonoBehaviour
     public GameObject pinObject, firingArea;
     public List<GameObject> pinsList;
     // Start is called before the first frame update
-    private float pinRotateSpeed = 0.05f;
+    private float pinRotateSpeed = 16f;
     void Start()
     {
         MakePins(pinObject, Vector3.zero, 8);
@@ -15,7 +15,7 @@ public class BoardScript : MonoBehaviour
         References.firingArea = firingArea;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (References.isAPieceOnTheBoard == false)
         {
@@ -49,7 +49,7 @@ public class BoardScript : MonoBehaviour
     {
         foreach (GameObject pin in pinsList)
         {
-            pin.transform.RotateAround(Vector3.zero, Vector3.up, pinRotateSpeed);
+            pin.transform.RotateAround(Vector3.zero, Vector3.up, Time.fixedDeltaTime * pinRotateSpeed);
         }
     }
 
