@@ -7,11 +7,9 @@ using UnityEngine.UI;
 public class ChipMovement : MonoBehaviour
 {
     private Rigidbody chipRb;
-    public float thrust, targetPowerLevel, powerLevel, targetDirectionLevel, directionLevel, powerTimer, directionTimer, waitTime,
-
-finalThrust;
+    public float thrust, targetPowerLevel, powerLevel, targetDirectionLevel, directionLevel, powerTimer, directionTimer, waitTime, finalThrust;
     public bool isActivePiece, inputLocked, chipHasLeftTheBoard, directionIncrease, hasTakenShot, chipPotted;
-    private GameObject playerChip, placeholderChip, firingArea;
+    private GameObject playerChip, placeholderChip;
     private int turnPhase, golfShootPhase;
     Color transparentColour;
     private Vector3 chipTarget;
@@ -20,10 +18,15 @@ finalThrust;
     const float secondsToSkipTurn = 3;
     float skipTurnTimer;
 
-
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        HandleNewGame();
+    }
+
+    void HandleNewGame()
+    {
+        Debug.Log("handlenewgame");
         hasTakenShot = false;
         skipTurnTimer = 0f;
         targetDirectionLevel = 50;
@@ -37,7 +40,6 @@ finalThrust;
         turnPhase = 0;
         placeholderChip = transform.Find("PlaceholderChip").gameObject;
         playerChip = transform.Find("PlayerChip").gameObject;
-        firingArea = GameObject.Find("FiringArea").gameObject;
         placeholderChip.SetActive(false);
         playerChip.SetActive(false);
         chipRb = playerChip.GetComponent<Rigidbody>();
@@ -72,8 +74,6 @@ finalThrust;
         }
     }
 
-
-
     void Shoot()
     {
         playerChip.SetActive(true);
@@ -96,7 +96,7 @@ finalThrust;
 
         if (golfShootPhase == 0)
         {
-            firingArea.SetActive(false);
+            References.firingArea.SetActive(false);
             References.cameraMovement.SetCamera(2);
             GameObject.Find("UI").transform.Find("PowerLevelSlider").gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.Space))
@@ -237,7 +237,7 @@ finalThrust;
     {
         if (placeholderChip.activeSelf)
         {
-            firingArea.SetActive(true);
+            References.firingArea.SetActive(true);
             References.cameraMovement.SetCamera(1);
             Ray rayFromCameraToCursor = Camera.main.ScreenPointToRay(Input.mousePosition);
             Plane playerPlane = new Plane(Vector3.up, transform.position);

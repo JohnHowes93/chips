@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject chipPrefab;
-    public List<GameObject> playerOneChips, playerTwoChips;
+    public GameObject chipPrefab, p1ChipContainer, p2ChipContainer;
+    public List<GameObject> playerOneChips, playerTwoChips, oldP1Chips, oldP2Chips;
     public int turnReference;
     public Vector3 playerOneChipLocation, playerTwoChipLocation, chipPositionOffset;
     public static bool isPlayerOnesTurn;
@@ -17,36 +17,39 @@ public class GameManager : MonoBehaviour
     {
         chipsPerPlayer = 1;
         References.outOfBoundsDistance = outOfBoundsDistance;
-        References.isPlayerOnesTurn = true;
         References.gameManager = this;
         chipPositionOffset = new Vector3(1, 0, 0);
         References.boardSize = 19;
         playerOneChipLocation = new Vector3(0, 0, -References.boardSize);
         playerTwoChipLocation = new Vector3(0, 0, References.boardSize);
-        turnReference = 0;
-        BuildPlayerChips();
-        NewTurn();
-        References.cameraMovement.SetCamera(0);
-    }
-
-    void Update()
-    {
-
-
+        HandleNewGame();
     }
 
     void BuildPlayerChips()
     {
+        p1ChipContainer = GameObject.Find("P1ChipContainer");
+        if (p1ChipContainer)
+        {
+            Destroy(p1ChipContainer);
+            p1ChipContainer = new GameObject("P1ChipContainer");
+            p1ChipContainer.transform.SetParent(this.transform);
+        }
+        p2ChipContainer = GameObject.Find("P2ChipContainer");
+        if (p2ChipContainer)
+        {
+            Destroy(p2ChipContainer);
+            p2ChipContainer = new GameObject("P2ChipContainer");
+            p2ChipContainer.transform.SetParent(this.transform);
+        }
         playerOneChips = new List<GameObject>();
         playerTwoChips = new List<GameObject>();
         for (int i = 0; i < chipsPerPlayer; i++)
         {
-            GameObject playerOneChip = Instantiate(chipPrefab);
+            GameObject playerOneChip = Instantiate(chipPrefab, new Vector3(i, 0, References.boardSize), Quaternion.identity, p1ChipContainer.transform);
             playerOneChip.name = "Player 1 Chip " + (i + 1);
             playerOneChip.transform.position = new Vector3(i, 0, References.boardSize);
             playerOneChips.Add(playerOneChip);
-
-            GameObject playerTwoChip = Instantiate(chipPrefab);
+            GameObject playerTwoChip = Instantiate(chipPrefab, new Vector3(i, 0, -References.boardSize), Quaternion.identity, p2ChipContainer.transform);
             playerTwoChip.name = "Player 2 Chip " + (i + 1);
             playerTwoChip.transform.position = new Vector3(i, 0, -References.boardSize);
             playerTwoChips.Add(playerTwoChip);
@@ -93,7 +96,6 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator HandleScore()
     {
-        Debug.Log("here");
         return References.scoreManager.CalculateScoreForAllChips();
     }
 
@@ -136,4 +138,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void HandlePostMatch()
+    {
+        Debug.Log("post match");
+    }
+
+    public void HandleNewGame()
+    {
+        References.isPlayerOnesTurn = true;
+        turnReference = 0;
+        References.cameraMovement.SetCamera(0);
+        BuildPlayerChips();
+        References.scoreManager.NewGame();
+        NewTurn();
+    }
 }

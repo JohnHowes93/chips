@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pinObject: {fileID: 7895731946784689519, guid: 0fe4aedea811a8d43beb5cc34e4db07f, type: 3}
+  firingArea: {fileID: 869480809673342872}
 --- !u!1 &1671617102057011584
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,6 +782,11 @@ PrefabInstance:
 --- !u!4 &529969673004475682 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bc814e14a78982f4d9cd136e36dea458, type: 3}
+  m_PrefabInstance: {fileID: 58667610095747785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &869480809673342872 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bc814e14a78982f4d9cd136e36dea458, type: 3}
   m_PrefabInstance: {fileID: 58667610095747785}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &58667610223140504

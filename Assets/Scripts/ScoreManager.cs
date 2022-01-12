@@ -14,7 +14,9 @@ public class ScoreManager : MonoBehaviour
     public int innerCircleScore = 15;
     public int middleCircleScore = 10;
     public int outerCircleScore = 5;
-    public TextMeshProUGUI p1ScoreIndicator, p2ScoreIndicator;
+    public TextMeshProUGUI p1ScoreIndicator, p2ScoreIndicator, p1PostMatchScoreIndicator, p2PostMatchScoreIndicator;
+
+    public GameObject postMatchUI, scoringUI;
     // Start is called before the first frame update
 
     void Awake()
@@ -23,8 +25,19 @@ public class ScoreManager : MonoBehaviour
     }
     void Start()
     {
+        NewGame();
+    }
+
+    public void NewGame()
+    {
         playerOneScore = 0;
         playerTwoScore = 0;
+        p1ScoreIndicator.SetText(playerOneScore.ToString());
+        p1PostMatchScoreIndicator.SetText(playerOneScore.ToString());
+        p2ScoreIndicator.SetText(playerTwoScore.ToString());
+        p2PostMatchScoreIndicator.SetText(playerTwoScore.ToString());
+        postMatchUI.SetActive(false);
+        scoringUI.SetActive(true);
     }
     public IEnumerator CalculateScoreForAllChips()
     {
@@ -110,12 +123,22 @@ public class ScoreManager : MonoBehaviour
 
             }
             p1ScoreIndicator.SetText(playerOneScore.ToString());
+            p1PostMatchScoreIndicator.SetText(playerOneScore.ToString());
             p2ScoreIndicator.SetText(playerTwoScore.ToString());
+            p2PostMatchScoreIndicator.SetText(playerTwoScore.ToString());
             yield return new WaitForSeconds(2);
         }
-        References.cameraMovement.SetCamera(1);
+        HandleEndGame();
         yield break;
         // TO DO / BUG SCORE NOT WORKING IF PIECE POTTED OR OFF BOARD
+    }
+
+    private void HandleEndGame()
+    {
+        References.cameraMovement.SetCamera(1);
+        References.gameManager.HandlePostMatch();
+        postMatchUI.SetActive(true);
+        scoringUI.SetActive(false);
     }
 
     public void CalculateCurrentBoardState()
@@ -170,11 +193,5 @@ public class ScoreManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void HighlightPieceAndCountScore()
-    {
-        // move the camera above the piece
-        // play sound for score
     }
 }

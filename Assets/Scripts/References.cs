@@ -8,7 +8,7 @@ public class References : MonoBehaviour
     public static float boardSize;
     public static bool isPlayerOnesTurn;
     public static CameraMovement cameraMovement;
-    public static GameObject activeChip;
+    public static GameObject activeChip, firingArea;
     public static GameObject mainCamera;
     public static ScoreManager scoreManager;
     public static List<GameObject> playerOneChips, playerTwoChips;

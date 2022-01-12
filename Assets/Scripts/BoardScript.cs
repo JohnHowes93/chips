@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BoardScript : MonoBehaviour
 {
-    public GameObject pinObject;
+    public GameObject pinObject, firingArea;
     // Start is called before the first frame update
     void Start()
     {
         MakePins(pinObject, Vector3.zero, 8);
         DrawBoard();
+        References.firingArea = firingArea;
     }
 
     public void MakePins(GameObject obj, Vector3 location, int howMany)
