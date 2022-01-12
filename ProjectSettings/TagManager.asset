@@ -7,6 +7,7 @@ TagManager:
   - Chip
   - Pin
   - BoardBase
+  - Marker
   layers:
   - Default
   - TransparentFX

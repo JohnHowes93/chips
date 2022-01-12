@@ -27,11 +27,11 @@ public class BoardScript : MonoBehaviour
 
     void DrawBoard()
     {
-        GameObject marker15 = new GameObject { name = "marker15" };
+        GameObject marker15 = new GameObject { name = "marker15", layer = 11 };
         marker15.DrawCircle(References.scoreManager.innerCircleRange, 0.1f);
-        GameObject marker10 = new GameObject { name = "marker10" };
+        GameObject marker10 = new GameObject { name = "marker10", layer = 11 };
         marker10.DrawCircle(References.scoreManager.outerCircleRange, 0.1f);
-        GameObject marker5 = new GameObject { name = "marker5" };
+        GameObject marker5 = new GameObject { name = "marker5", layer = 11 };
         marker5.DrawCircle(13, 0.1f);
     }
 
