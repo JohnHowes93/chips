@@ -211,7 +211,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-    spatialBlend: 0.8
+    spatialBlend: 0
   - name: golf-directiontrig
     clip: {fileID: 8300000, guid: 26db48003e3d70248b4dd1c7061524a6, type: 3}
     volume: 1
@@ -228,7 +228,7 @@ MonoBehaviour:
     spatialBlend: 0.8
   - name: menu-boot
     clip: {fileID: 8300000, guid: 23bf55358fda447479a8f23685c27e7a, type: 3}
-    volume: 0
+    volume: 0.569
     pitch: 1
     loop: 0
     source: {fileID: 0}

@@ -1773,6 +1773,8 @@ MonoBehaviour:
   innerCircleScore: 15
   middleCircleScore: 10
   outerCircleScore: 5
+  p1ScoreIndicator: {fileID: 1850689593}
+  p2ScoreIndicator: {fileID: 2114849289}
 --- !u!1 &1463708599
 GameObject:
   m_ObjectHideFlags: 0
@@ -2305,7 +2307,7 @@ GameObject:
   - component: {fileID: 1850689594}
   - component: {fileID: 1850689593}
   m_Layer: 5
-  m_Name: PlayerOneTurnCount
+  m_Name: PlayerOneScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2774,7 +2776,7 @@ GameObject:
   - component: {fileID: 2114849290}
   - component: {fileID: 2114849289}
   m_Layer: 5
-  m_Name: PlayerTwoTurnCount
+  m_Name: PlayerTwoScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2797,7 +2799,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 12.5}
-  m_SizeDelta: {x: 110, y: 50}
+  m_SizeDelta: {x: 110, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2114849289
 MonoBehaviour:

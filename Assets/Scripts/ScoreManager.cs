@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class ScoreManager : MonoBehaviour
     public int innerCircleScore = 15;
     public int middleCircleScore = 10;
     public int outerCircleScore = 5;
+    public TextMeshProUGUI p1ScoreIndicator, p2ScoreIndicator;
     // Start is called before the first frame update
 
     void Awake()
@@ -26,7 +28,6 @@ public class ScoreManager : MonoBehaviour
     }
     public IEnumerator CalculateScoreForAllChips()
     {
-        References.cameraMovement.SetCamera(4);
         // merge the lists
         List<GameObject> mergedLists = new List<GameObject>();
         mergedLists.AddRange(References.playerOneChips);
@@ -58,10 +59,11 @@ public class ScoreManager : MonoBehaviour
             }
             else
             {
-                References.cameraMovement.SetDestination(playerChipPosition + (Vector3.up * 10));
-                yield return new WaitForSeconds(2);
                 if (distanceFromCenter < innerCircleRange)
                 {
+                    References.cameraMovement.SetDestination(playerChipPosition + (Vector3.up * 10));
+                    References.cameraMovement.SetCamera(4);
+                    yield return new WaitForSeconds(2);
                     switch (playerNumber)
                     {
                         case "1":
@@ -72,10 +74,11 @@ public class ScoreManager : MonoBehaviour
                             break;
                     }
                     References.audioManager.Play("board-15");
-                    yield return new WaitForSeconds(2);
                 }
                 else if (distanceFromCenter < outerCircleRange)
                 {
+                    References.cameraMovement.SetDestination(playerChipPosition + (Vector3.up * 10));
+                    References.cameraMovement.SetCamera(4);
                     switch (playerNumber)
                     {
                         case "1":
@@ -86,10 +89,11 @@ public class ScoreManager : MonoBehaviour
                             break;
                     }
                     References.audioManager.Play("board-10");
-                    yield return new WaitForSeconds(2);
                 }
                 else if (distanceFromCenter < (References.boardSize - 0.1f))
                 {
+                    References.cameraMovement.SetDestination(playerChipPosition + (Vector3.up * 10));
+                    References.cameraMovement.SetCamera(4);
                     switch (playerNumber)
                     {
                         case "1":
@@ -103,8 +107,15 @@ public class ScoreManager : MonoBehaviour
                     yield return new WaitForSeconds(2);
                 }
                 // trigger ui update here
+
             }
+            p1ScoreIndicator.SetText(playerOneScore.ToString());
+            p2ScoreIndicator.SetText(playerTwoScore.ToString());
+            yield return new WaitForSeconds(2);
         }
+        References.cameraMovement.SetCamera(1);
+        yield break;
+        // TO DO / BUG SCORE NOT WORKING IF PIECE POTTED OR OFF BOARD
     }
 
     public void CalculateCurrentBoardState()

@@ -85,7 +85,6 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-
                 References.isPlayerOnesTurn = !References.isPlayerOnesTurn;
                 NewTurn();
             }
@@ -94,6 +93,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator HandleScore()
     {
+        Debug.Log("here");
         return References.scoreManager.CalculateScoreForAllChips();
     }
 
