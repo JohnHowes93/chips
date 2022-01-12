@@ -6,7 +6,7 @@ public class References : MonoBehaviour
 {
     public static GameManager gameManager;
     public static float boardSize;
-    public static bool isPlayerOnesTurn;
+    public static bool isPlayerOnesTurn, isAPieceOnTheBoard;
     public static CameraMovement cameraMovement;
     public static GameObject activeChip, firingArea;
     public static GameObject mainCamera;

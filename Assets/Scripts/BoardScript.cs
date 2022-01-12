@@ -5,12 +5,22 @@ using UnityEngine;
 public class BoardScript : MonoBehaviour
 {
     public GameObject pinObject, firingArea;
+    public List<GameObject> pinsList;
     // Start is called before the first frame update
+    private float pinRotateSpeed = 0.05f;
     void Start()
     {
         MakePins(pinObject, Vector3.zero, 8);
         DrawBoard();
         References.firingArea = firingArea;
+    }
+
+    void Update()
+    {
+        if (References.isAPieceOnTheBoard == false)
+        {
+            SpinPins();
+        }
     }
 
     public void MakePins(GameObject obj, Vector3 location, int howMany)
@@ -20,8 +30,8 @@ public class BoardScript : MonoBehaviour
             float radius = 3.5f;
             float angle = i * Mathf.PI * 2f / howMany;
             Vector3 newPos = transform.position + (new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius));
-            Instantiate(obj, newPos, Quaternion.Euler(0, 0, 0), gameObject.transform);
-            // obj.transform.parent = gameObject.transform;
+            GameObject newPin = Instantiate(obj, newPos, Quaternion.Euler(0, 0, 0), gameObject.transform);
+            pinsList.Add(newPin);
         }
     }
 
@@ -34,5 +44,15 @@ public class BoardScript : MonoBehaviour
         GameObject marker5 = new GameObject { name = "marker5", layer = 11 };
         marker5.DrawCircle(13, 0.1f);
     }
+
+    void SpinPins()
+    {
+        foreach (GameObject pin in pinsList)
+        {
+            pin.transform.RotateAround(Vector3.zero, Vector3.up, pinRotateSpeed);
+        }
+    }
+
+
 
 }

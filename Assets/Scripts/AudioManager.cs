@@ -61,6 +61,22 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void SetLevelAndPlayRandomPitch(string name, float level)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null)
+        {
+            return;
+        }
+        else
+        {
+            s.source.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+            s.source.volume = level;
+            s.source.Play();
+        }
+    }
+
+
     void Start()
     {
         Play("menu-boot");
@@ -72,7 +88,25 @@ public class AudioManager : MonoBehaviour
         string sampleSelect = "chip-collision-" + sampleIndexToPlay.ToString();
         SetLevelAndPlay(sampleSelect, level);
         chipCollisionsThisTurn++;
+        if (chipCollisionsThisTurn > 15)
+        {
+            chipCollisionsThisTurn = 0;
+        }
     }
+
+    public void HandleMenuChipCollision(float level)
+    {
+        string sampleSelect = "chip-collision-" + UnityEngine.Random.Range(1, 16).ToString();
+        SetLevelAndPlayRandomPitch(sampleSelect, level);
+    }
+
+    public void RandomChipCollision(float level)
+    {
+        int sampleIndexToPlay = UnityEngine.Random.Range(1, 16);
+        string sampleSelect = "chip-collision-" + sampleIndexToPlay.ToString();
+        SetLevelAndPlay(sampleSelect, level);
+    }
+
     public void HandlePinCollision(float level)
     {
         if (lastPinCollisionSampleNumber == 1)

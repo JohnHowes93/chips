@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        chipsPerPlayer = 1;
+        chipsPerPlayer = 3;
         References.outOfBoundsDistance = outOfBoundsDistance;
         References.gameManager = this;
         chipPositionOffset = new Vector3(1, 0, 0);

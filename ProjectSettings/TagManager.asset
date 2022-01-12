@@ -8,6 +8,7 @@ TagManager:
   - Pin
   - BoardBase
   - Marker
+  - MenuChip
   layers:
   - Default
   - TransparentFX

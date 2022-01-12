@@ -15,7 +15,6 @@ public class ScoreManager : MonoBehaviour
     public int middleCircleScore = 10;
     public int outerCircleScore = 5;
     public TextMeshProUGUI p1ScoreIndicator, p2ScoreIndicator, p1PostMatchScoreIndicator, p2PostMatchScoreIndicator;
-
     public GameObject postMatchUI, scoringUI;
     // Start is called before the first frame update
 
@@ -30,6 +29,8 @@ public class ScoreManager : MonoBehaviour
 
     public void NewGame()
     {
+
+        References.isAPieceOnTheBoard = false;
         playerOneScore = 0;
         playerTwoScore = 0;
         p1ScoreIndicator.SetText(playerOneScore.ToString());
@@ -55,7 +56,7 @@ public class ScoreManager : MonoBehaviour
             float distanceFromCenter = Vector3.Distance(playerChipPosition, Vector3.zero);
             if (distanceFromCenter > References.boardSize)
             {
-                yield break;
+
             }
             if (chipData.chipPotted == true)
             {
@@ -119,8 +120,6 @@ public class ScoreManager : MonoBehaviour
                     References.audioManager.Play("board-5");
                     yield return new WaitForSeconds(2);
                 }
-                // trigger ui update here
-
             }
             p1ScoreIndicator.SetText(playerOneScore.ToString());
             p1PostMatchScoreIndicator.SetText(playerOneScore.ToString());
@@ -192,6 +191,14 @@ public class ScoreManager : MonoBehaviour
                     playerTwoScoreCurrentBoardState += outerCircleScore;
                 }
             }
+        }
+        if (playerOneScoreCurrentBoardState == 0 && playerTwoScoreCurrentBoardState == 0)
+        {
+            References.isAPieceOnTheBoard = false;
+        }
+        else
+        {
+            References.isAPieceOnTheBoard = true;
         }
     }
 }
